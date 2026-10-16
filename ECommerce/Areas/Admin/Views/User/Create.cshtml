@@ -1,0 +1,127 @@
+﻿@model UserVM
+
+<div class="container py-5">
+
+    <div class="crud-page-header">
+        <span class="page-badge">USER MANAGEMENT</span>
+
+        <h1>Create User</h1>
+
+        <p>Add a new user to your application.</p>
+    </div>
+
+    <div class="crud-card">
+
+        <form asp-action="Create" method="post">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="alert alert-danger">
+            </div>
+
+            <div class="form-section">
+
+                <div class="form-section-title">
+                    <i class="bi bi-person-plus"></i>
+                    User Information
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="FullName" class="form-label">
+                    </label>
+
+                    <input asp-for="FullName"
+                           class="form-control form-control-modern"
+                           placeholder="Enter full name" />
+
+                    <span asp-validation-for="FullName"
+                          class="text-danger">
+                    </span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Email" class="form-label">
+                    </label>
+
+                    <input asp-for="Email"
+                           class="form-control form-control-modern"
+                           placeholder="Enter email address" />
+
+                    <span asp-validation-for="Email"
+                          class="text-danger">
+                    </span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Password" class="form-label">
+                    </label>
+
+                    <input asp-for="Password"
+                           class="form-control form-control-modern"
+                           placeholder="Enter password" />
+
+                    <span asp-validation-for="Password"
+                          class="text-danger">
+                    </span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Address" class="form-label">
+                    </label>
+
+                    <input asp-for="Address"
+                           class="form-control form-control-modern"
+                           placeholder="Enter address" />
+
+                    <span asp-validation-for="Address"
+                          class="text-danger">
+                    </span>
+                </div>
+
+                <div class="mb-4">
+
+                    <label asp-for="Role" class="form-label">
+                    </label>
+
+                    <select asp-for="Role"
+                            asp-items="Model.Roles"
+                            class="form-select form-control-modern">
+
+                        <option value="">
+                            -- Select Role --
+                        </option>
+
+                    </select>
+
+                    <span asp-validation-for="Role"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="crud-actions">
+
+                <button type="submit"
+                        class="btn btn-primary">
+                    <i class="bi bi-check-lg"></i>
+                    Create User
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-light">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

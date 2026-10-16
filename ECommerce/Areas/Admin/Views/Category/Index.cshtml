@@ -1,0 +1,98 @@
+﻿@model List<Category>
+
+<div class="container py-5">
+
+    <div class="user-page-header">
+        <div>
+            <span class="page-badge">ADMIN PANEL</span>
+
+            <h1>Category Management</h1>
+
+            <p>Manage your categories and display order.</p>
+        </div>
+
+        <a asp-controller="Category"
+           asp-action="Create"
+           class="btn btn-primary create-user-btn">
+            <i class="bi bi-plus-circle me-1"></i>
+            Add Category
+        </a>
+    </div>
+
+
+    <div class="user-table-card">
+
+        <div class="table-responsive">
+
+            <table class="table user-table mb-0">
+
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Display Order</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var obj in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                <div class="d-flex align-items-center gap-3">
+
+                                    <div class="user-icon">
+                                        <i class="bi bi-tags"></i>
+                                    </div>
+
+                                    <strong>
+                                        @obj.Name
+                                    </strong>
+
+                                </div>
+                            </td>
+
+                            <td>
+                                <span class="fw-semibold">
+                                    @obj.DisplayOrder
+                                </span>
+                            </td>
+
+                            <td class="text-end">
+
+                                <div class="user-actions">
+
+                                    <a asp-controller="Category"
+                                       asp-action="Edit"
+                                       asp-route-id="@obj.Id"
+                                       class="btn-edit">
+                                        <i class="bi bi-pencil"></i>
+                                        Edit
+                                    </a>
+
+                                    <a asp-controller="Category"
+                                       asp-action="Delete"
+                                       asp-route-id="@obj.Id"
+                                       class="btn-delete">
+                                        <i class="bi bi-trash3"></i>
+                                        Delete
+                                    </a>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

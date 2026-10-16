@@ -1,0 +1,91 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="hero-section">
+    <div class="hero-content">
+        <span class="hero-badge">WELCOME TO ECOMMERCE</span>
+
+        <h1>
+            Everything you need,<br />
+            <span>all in one place.</span>
+        </h1>
+
+        <p>
+            Discover quality products at great prices.
+            Shop easily, quickly, and securely.
+        </p>
+
+        <div class="hero-buttons">
+            <a asp-area="Customer"
+                asp-controller="Product"
+               asp-action="Index" 
+               class="btn btn-primary btn-lg">
+                Shop Now
+            </a>
+
+            <a href="#featured"
+               class="btn btn-outline-dark btn-lg">
+                Explore
+            </a>
+        </div>
+    </div>
+</div>
+
+<section id="featured" class="container py-5">
+
+    <div class="section-title">
+        <span>WHY SHOP WITH US?</span>
+        <h2>Everything made simple</h2>
+    </div>
+
+    <div class="row g-4 mt-3">
+
+        <div class="col-md-4">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    🛒
+                </div>
+
+                <h4>Easy Shopping</h4>
+
+                <p>
+                    Browse our products and find exactly what you're
+                    looking for with ease.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    ⚡
+                </div>
+
+                <h4>Fast & Simple</h4>
+
+                <p>
+                    A clean and simple shopping experience designed
+                    to save you time.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    🔒
+                </div>
+
+                <h4>Secure</h4>
+
+                <p>
+                    Your account and information are protected with
+                    modern security.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+</section>

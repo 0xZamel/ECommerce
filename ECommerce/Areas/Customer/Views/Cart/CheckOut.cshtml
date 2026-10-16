@@ -1,0 +1,152 @@
+﻿@model ECommerce.Models.ViewModels.CheckOutVM
+
+<div class="container py-5">
+
+    <div class="mb-5">
+        <span class="page-badge">CHECKOUT</span>
+
+        <h1 class="fw-bold mt-2">
+            Checkout
+        </h1>
+
+        <p class="text-muted">
+            Enter your delivery information.
+        </p>
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-lg-8">
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <h4 class="fw-bold mb-4">
+                        Delivery Information
+                    </h4>
+
+                    <form asp-action="Checkout" method="post">
+
+                        <!-- Name -->
+                        <div class="mb-4">
+
+                            <label asp-for="Name"
+                                   class="form-label fw-semibold">
+                                Full Name
+                            </label>
+
+                            <input asp-for="Name"
+                                   class="form-control"
+                                   placeholder="Enter your name" />
+
+                            <span asp-validation-for="Name"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+
+                        <!-- Address -->
+                        <div class="mb-4">
+
+                            <label asp-for="Address"
+                                   class="form-label fw-semibold">
+                                Address
+                            </label>
+
+                            <textarea asp-for="Address"
+                                      class="form-control"
+                                      rows="4"
+                                      placeholder="Enter your full address"></textarea>
+
+                            <span asp-validation-for="Address"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+
+                        <!-- Phone -->
+                        <div class="mb-4">
+
+                            <label asp-for="PhoneNumber"
+                                   class="form-label fw-semibold">
+                                Phone Number
+                            </label>
+
+                            <input asp-for="PhoneNumber"
+                                   class="form-control"
+                                   placeholder="Enter your phone number" />
+
+                            <span asp-validation-for="PhoneNumber"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+
+                        <button type="submit"
+                                class="btn btn-primary">
+                            Place Order
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Order Summary -->
+        <div class="col-lg-4">
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <h4 class="fw-bold mb-4">
+                        Order Summary
+                    </h4>
+
+                    <div class="d-flex justify-content-between mb-3">
+
+                        <span class="text-muted">
+                            Total
+                        </span>
+
+                        <span class="fw-bold text-primary">
+                            $@Model.Total.ToString("N2")
+                        </span>
+
+                    </div>
+
+                    <hr />
+
+                    <div class="d-flex justify-content-between">
+
+                        <span class="fw-bold">
+                            Order Total
+                        </span>
+
+                        <span class="fw-bold fs-5">
+                            $@Model.Total.ToString("N2")
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

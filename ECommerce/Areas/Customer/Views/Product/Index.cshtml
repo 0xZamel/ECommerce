@@ -1,0 +1,182 @@
+﻿@model List<ECommerce.Models.Product>
+
+<div class="container py-5">
+
+    <!-- Header -->
+    <div class="text-center mb-5">
+
+        <span class="page-badge">
+            OUR PRODUCTS
+        </span>
+
+        <h1 class="fw-bold mt-2">
+            Explore Our Products
+        </h1>
+
+        <p class="text-muted">
+            Find the perfect product for you.
+        </p>
+
+    </div>
+
+
+    <!-- Category Filter -->
+    <div class="d-flex justify-content-end mb-4">
+
+        <form asp-area="Customer"
+              asp-controller="Product"
+              asp-action="Index"
+              method="get">
+
+            <select name="categoryId"
+                    class="form-select product-category-filter"
+                    onchange="this.form.submit()">
+
+                <option value=""
+                        selected="@(string.IsNullOrEmpty(Context.Request.Query["categoryId"]))">
+                    All Categories
+                </option>
+
+                @foreach (var category in ViewBag.Categories)
+                {
+                    <option value="@category.Id"
+                            selected="@(Context.Request.Query["categoryId"] == category.Id.ToString())">
+                        @category.Name
+                    </option>
+                }
+
+            </select>
+
+        </form>
+
+    </div>
+
+
+    <!-- Products -->
+    <div class="row g-4">
+
+        @foreach (var product in Model)
+        {
+            <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+
+                <div class="card h-100 border-0 shadow-sm">
+
+                    <!-- Product Image -->
+                    <div class="product-image-container">
+
+                        @if (!string.IsNullOrEmpty(product.ImageUrl))
+                        {
+                            <img src="@product.ImageUrl"
+                                 alt="@product.Name"
+                                 class="product-image" />
+                        }
+                        else
+                        {
+                            <div class="product-image-placeholder">
+                                <i class="bi bi-box-seam"></i>
+                            </div>
+                        }
+
+                    </div>
+
+
+                    <div class="card-body d-flex flex-column">
+
+                        <!-- Product Name -->
+                        <h5 class="fw-bold">
+                            @product.Name
+                        </h5>
+
+
+                        <!-- Category -->
+                        @if (product.Category != null)
+                        {
+                            <small class="text-primary fw-semibold mb-2">
+                                @product.Category.Name
+                            </small>
+                        }
+
+
+                        <!-- Description -->
+                        <p class="text-muted flex-grow-1">
+                            @product.Description
+                        </p>
+
+
+                        <!-- Stock -->
+                        @if (product.StockQuantity > 0)
+                        {
+                            <small class="text-success fw-semibold mb-2">
+                                <i class="bi bi-check-circle me-1"></i>
+                                @product.StockQuantity in stock
+                            </small>
+                        }
+                        else
+                        {
+                            <small class="text-danger fw-semibold mb-2">
+                                <i class="bi bi-x-circle me-1"></i>
+                                Out of stock
+                            </small>
+                        }
+
+
+                        <!-- Price + Cart -->
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+
+                            <span class="fw-bold text-primary">
+                                $@product.Price.ToString("N2")
+                            </span>
+
+                            <a asp-area="Customer"
+                               asp-controller="Product"
+                               asp-action="Details"
+                               asp-route-id="@product.Id"
+                               class="btn btn-outline-primary btn-sm">
+                                View Details
+                            </a>
+
+                            @if (product.StockQuantity > 0)
+                            {
+                                <form asp-area="Customer"
+                                      asp-controller="Cart"
+                                      asp-action="AddToCart"
+                                      method="post">
+
+                                    <input type="hidden"
+                                           name="productId"
+                                           value="@product.Id" />
+
+                                    <button type="submit"
+                                            class="btn btn-primary btn-sm">
+
+                                        <i class="bi bi-cart-plus me-1"></i>
+                                        Add to Cart
+
+                                    </button>
+
+                                </form>
+                            }
+                            else
+                            {
+                                <button type="button"
+                                        class="btn btn-secondary btn-sm"
+                                        disabled>
+
+                                    Out of Stock
+
+                                </button>
+                            }
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+
+</div>

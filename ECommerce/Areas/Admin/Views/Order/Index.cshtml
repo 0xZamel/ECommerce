@@ -1,0 +1,313 @@
+﻿@model List<ECommerce.Models.ViewModels.OrderVM>
+
+<div class="admin-page-header">
+
+    <div>
+        <span class="admin-badge">ADMIN PANEL</span>
+
+        <h1>Order Management</h1>
+
+        <p>
+            Manage customer orders and view order details.
+        </p>
+    </div>
+
+</div>
+
+
+<div class="admin-table-card">
+
+    <div class="table-responsive">
+
+        <table class="admin-table">
+
+            <thead>
+                <tr>
+                    <th>ORDER</th>
+                    <th>CUSTOMER</th>
+                    <th>PHONE</th>
+                    <th>DATE</th>
+                    <th>TOTAL</th>
+                    <th>STATUS</th>
+                    <th>PAYMENT</th>
+                    <th>PAYMENT METHOD</th>
+                    <th class="text-end">ACTIONS</th>
+                </tr>
+            </thead>
+
+
+            <tbody>
+
+                @foreach (var order in Model)
+                {
+                    <tr>
+
+                        <!-- Order -->
+                        <td>
+                            <div class="d-flex align-items-center gap-3">
+
+                                <div class="admin-icon">
+                                    <i class="bi bi-receipt"></i>
+                                </div>
+
+                                <strong>
+                                    #@order.Id
+                                </strong>
+
+                            </div>
+                        </td>
+
+
+                        <!-- Customer -->
+                        <td>
+
+                            <div class="fw-semibold">
+                                @order.Name
+                            </div>
+
+                            <small class="text-muted">
+                                @order.UserName
+                            </small>
+
+                        </td>
+
+
+                        <!-- Phone -->
+                        <td>
+                            @order.PhoneNumber
+                        </td>
+
+
+                        <!-- Date -->
+                        <td>
+
+                            <div>
+                                @order.OrderDate.ToString("dd/MM/yyyy")
+                            </div>
+
+                            <small class="text-muted">
+                                @order.OrderDate.ToString("hh:mm tt")
+                            </small>
+
+                        </td>
+
+
+                        <!-- Total -->
+                        <td>
+
+                            <strong class="text-primary">
+                                $@order.Total.ToString("N2")
+                            </strong>
+
+                        </td>
+
+
+                        <!-- Status -->
+                        <td>
+
+                            @{
+                                var statusClass = order.Status switch
+                                {
+                                    ECommerce.Models.OrderStatus.Pending => "status-pending",
+                                    ECommerce.Models.OrderStatus.Processing => "status-processing",
+                                    ECommerce.Models.OrderStatus.Shipped => "status-shipped",
+                                    ECommerce.Models.OrderStatus.Completed => "status-completed",
+                                    ECommerce.Models.OrderStatus.Cancelled => "status-cancelled",
+                                    _ => "status-default"
+                                };
+                            }
+
+                            <form asp-action="UpdateStatus"
+                                  method="post"
+                                  class="d-flex gap-2 align-items-center">
+
+                                <input type="hidden"
+                                       name="id"
+                                       value="@order.Id" />
+
+                                <select name="status"
+                                        class="form-select form-select-sm status-select @statusClass">
+
+                                    @foreach (var status in Enum.GetValues<ECommerce.Models.OrderStatus>())
+                                    {
+                                        <option value="@status"
+                                                selected="@(order.Status == status)">
+                                            @status
+                                        </option>
+                                    }
+
+                                </select>
+
+                                <button type="submit"
+                                        class="btn btn-sm btn-primary">
+                                    Update
+                                </button>
+
+                            </form>
+
+                        </td>
+
+
+                        <!-- Payment -->
+                        <td>
+
+                            @if (order.IsPaid)
+                            {
+                                <span class="order-status completed">
+                                    <i class="bi bi-check-circle"></i>
+                                    Paid
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="order-status pending">
+                                    <i class="bi bi-clock"></i>
+                                    Unpaid
+                                </span>
+                            }
+
+                        </td>
+
+
+                        <!-- Payment Method -->
+                        <td>
+
+                            @switch (order.PaymentMethod)
+                            {
+                                case ECommerce.Models.PaymentMethod.CashOnDelivery:
+
+                                    <span class="payment-method">
+                                        <i class="bi bi-cash"></i>
+                                        Cash on Delivery
+                                    </span>
+
+                                    break;
+
+                                case ECommerce.Models.PaymentMethod.Card:
+
+                                    <span class="payment-method">
+                                        <i class="bi bi-credit-card"></i>
+                                        Card
+                                    </span>
+
+                                    break;
+
+                                default:
+
+                                    <span class="text-muted">
+                                        Unknown
+                                    </span>
+
+                                    break;
+                            }
+
+                        </td>
+
+
+                        <!-- Actions -->
+                        <td class="text-end">
+
+                            <div class="admin-actions">
+
+                                <a asp-action="Details"
+                                   asp-route-id="@order.Id"
+                                   class="admin-btn admin-btn-edit">
+
+                                    <i class="bi bi-eye"></i>
+                                    Details
+
+                                </a>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+<style>
+
+    .status-select {
+        font-weight: 600;
+        border-width: 2px;
+        min-width: 130px;
+    }
+
+    .status-pending {
+        background-color: #fff3cd;
+        color: #856404;
+        border-color: #ffc107;
+    }
+
+    .status-processing {
+        background-color: #cff4fc;
+        color: #055160;
+        border-color: #0dcaf0;
+    }
+
+    .status-shipped {
+        background-color: #cfe2ff;
+        color: #084298;
+        border-color: #0d6efd;
+    }
+
+    .status-completed {
+        background-color: #d1e7dd;
+        color: #0f5132;
+        border-color: #198754;
+    }
+
+    .status-cancelled {
+        background-color: #f8d7da;
+        color: #842029;
+        border-color: #dc3545;
+    }
+
+    .status-default {
+        background-color: #e2e3e5;
+        color: #41464b;
+        border-color: #6c757d;
+    }
+
+</style>
+
+
+<script>
+
+    window.addEventListener("beforeunload", function() {
+        sessionStorage.setItem(
+            "orderScrollPosition",
+            window.scrollY
+        );
+    });
+
+
+    window.addEventListener("load", function() {
+
+        const scrollPosition =
+            sessionStorage.getItem("orderScrollPosition");
+
+        if (scrollPosition !== null) {
+
+            window.scrollTo(
+                0,
+                parseInt(scrollPosition)
+            );
+
+            sessionStorage.removeItem(
+                "orderScrollPosition"
+            );
+        }
+
+    });
+
+</script>

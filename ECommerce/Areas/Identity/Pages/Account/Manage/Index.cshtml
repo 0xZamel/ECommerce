@@ -1,0 +1,101 @@
+@page
+@model IndexModel
+
+<div class="container py-5">
+
+    <div class="crud-page-header">
+        <div>
+            <span class="page-badge">ACCOUNT</span>
+
+            <h1>My Profile</h1>
+
+            <p>Manage your personal information.</p>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.StatusMessage))
+    {
+        <div class="alert alert-success">
+            @Model.StatusMessage
+        </div>
+    }
+
+    <div class="crud-card profile-card">
+
+        <div class="form-section-title">
+            <i class="bi bi-person-circle"></i>
+            Personal Information
+        </div>
+
+        <form method="post">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger">
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Input.FullName"
+                       class="form-label">
+                </label>
+
+                <input asp-for="Input.FullName"
+                       class="form-control form-control-modern"
+                       placeholder="Enter your full name" />
+
+                <span asp-validation-for="Input.FullName"
+                      class="text-danger">
+                </span>
+            </div>
+
+            
+
+            <div class="mb-4">
+                <label asp-for="Input.PhoneNumber"
+                       class="form-label">
+                </label>
+
+                <input asp-for="Input.PhoneNumber"
+                       class="form-control form-control-modern"
+                       placeholder="Enter your phone number" />
+
+                <span asp-validation-for="Input.PhoneNumber"
+                      class="text-danger">
+                </span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Input.Address"
+                       class="form-label">
+                </label>
+
+                <textarea asp-for="Input.Address"
+                          class="form-control form-control-modern"
+                          rows="3"
+                          placeholder="Enter your address">
+                </textarea>
+
+                <span asp-validation-for="Input.Address"
+                      class="text-danger">
+                </span>
+            </div>
+
+            <div class="crud-actions">
+
+                <button type="submit"
+                        class="btn btn-primary">
+                    <i class="bi bi-check-lg"></i>
+                    Save Changes
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,89 @@
+﻿@model List<RoleVM>
+
+<div class="product-page-header">
+
+    <div>
+        <span class="page-badge">ADMIN PANEL</span>
+
+        <h1>Role Management</h1>
+
+        <p>Manage application roles.</p>
+
+        <span class="product-count">
+            @Model.Count roles
+        </span>
+    </div>
+
+    <a asp-area="Admin"
+       asp-controller="Role"
+       asp-action="Create"
+       class="btn btn-primary create-product-btn">
+        <i class="bi bi-plus-lg"></i>
+        Add Role
+    </a>
+
+</div>
+
+
+<div class="product-table-card">
+
+    <table class="table product-table role-table">
+
+        <thead>
+            <tr>
+                <th>ROLE</th>
+                <th class="text-end">ACTIONS</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var role in Model)
+            {
+                <tr>
+
+                    <td>
+                        <div class="product-name">
+
+                            <div class="product-icon">
+                                <i class="bi bi-shield-check"></i>
+                            </div>
+
+                            <span>
+                                @role.Name
+                            </span>
+
+                        </div>
+                    </td>
+
+
+                    <td>
+
+                        <div class="product-actions">
+
+                            <a asp-action="Edit"
+                               asp-route-id="@role.Id"
+                               class="btn-edit">
+                                <i class="bi bi-pencil"></i>
+                                Edit
+                            </a>
+
+                            <a asp-action="Delete"
+                               asp-route-id="@role.Id"
+                               class="btn-delete">
+                                <i class="bi bi-trash"></i>
+                                Delete
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+</div>

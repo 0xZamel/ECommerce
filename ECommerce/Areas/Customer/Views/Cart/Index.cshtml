@@ -1,0 +1,253 @@
+﻿@model ECommerce.Models.ViewModels.CartVM
+
+<div class="container py-5">
+
+    <div class="mb-5">
+        <span class="page-badge">SHOPPING CART</span>
+
+        <h1 class="fw-bold mt-2">Your Cart</h1>
+
+        <p class="text-muted">
+            Review your items before checkout.
+        </p>
+    </div>
+
+    @if (!Model.CartItems.Any())
+    {
+        <div class="card border-0 shadow-sm text-center py-5">
+
+            <div class="product-icon mx-auto mb-3">
+                <i class="bi bi-cart-x"></i>
+            </div>
+
+            <h3 class="fw-bold">
+                Your cart is empty
+            </h3>
+
+            <p class="text-muted mb-4">
+                You haven't added any products yet.
+            </p>
+
+            <div>
+                <a asp-area="Customer"
+                   asp-controller="Product"
+                   asp-action="Index"
+                   class="btn btn-primary">
+                    Continue Shopping
+                </a>
+            </div>
+
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+
+            <!-- Cart Items -->
+            <div class="col-lg-8">
+
+                <div class="card border-0 shadow-sm">
+
+                    <div class="card-body p-0">
+
+                        @foreach (var item in Model.CartItems)
+                        {
+                            <div class="cart-item p-4">
+
+                                <div class="row align-items-center">
+
+                                    <!-- Product -->
+                                    <div class="col-lg-5 col-md-4">
+                                        <div class="d-flex align-items-center gap-3">
+
+                                            <div class="product-icon">
+                                                <i class="bi bi-box-seam"></i>
+                                            </div>
+
+                                            <div>
+                                                <h5 class="fw-bold mb-1">
+                                                    @item.ProductName
+                                                </h5>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                    <!-- Quantity -->
+                                    <div class="col-lg-2 col-md-2 text-center">
+
+                                        <small class="text-muted d-block mb-2">
+                                            Quantity
+                                        </small>
+
+                                        <div class="d-flex justify-content-center align-items-center gap-2">
+
+                                            @if (item.Quantity == 1)
+                                            {
+                                                <form asp-area="Customer"
+                                                      asp-controller="Cart"
+                                                      asp-action="Remove"
+                                                      method="post">
+
+                                                    <input type="hidden"
+                                                           name="cartItemId"
+                                                           value="@item.CartItemId" />
+
+                                                    <button type="submit"
+                                                            class="btn btn-sm btn-outline-danger cart-quantity-btn">
+
+                                                        <i class="bi bi-trash"></i>
+
+                                                    </button>
+
+                                                </form>
+                                            }
+                                            else
+                                            {
+                                                <form asp-area="Customer"
+                                                      asp-controller="Cart"
+                                                      asp-action="Decrease"
+                                                      method="post">
+
+                                                    <input type="hidden"
+                                                           name="cartItemId"
+                                                           value="@item.CartItemId" />
+
+                                                    <button type="submit"
+                                                            class="btn btn-sm btn-outline-secondary cart-quantity-btn">
+                                                        -
+                                                    </button>
+
+                                                </form>
+                                            }
+
+                                            <span class="fw-bold quantity-number">
+                                                @item.Quantity
+                                            </span>
+
+                                            <form asp-area="Customer"
+                                                  asp-controller="Cart"
+                                                  asp-action="Increase"
+                                                  method="post">
+
+                                                <input type="hidden"
+                                                       name="cartItemId"
+                                                       value="@item.CartItemId" />
+
+                                                <button type="submit"
+                                                        class="btn btn-sm btn-outline-secondary cart-quantity-btn">
+                                                    +
+                                                </button>
+
+                                            </form>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- Price -->
+                                    <div class="col-lg-2 col-md-2 text-center">
+
+                                        <small class="text-muted d-block mb-2">
+                                            Price
+                                        </small>
+
+                                        <span class="fw-bold text-primary">
+                                            $@item.Price.ToString("N2")
+                                        </span>
+
+                                    </div>
+
+
+                                    <!-- Total -->
+                                    <div class="col-lg-2 col-md-2 text-end">
+
+                                        <small class="text-muted d-block mb-2">
+                                            Total
+                                        </small>
+
+                                        <span class="fw-bold">
+                                            $@item.Total.ToString("N2")
+                                        </span>
+
+                                    </div>
+
+
+                                    <!-- Remove -->
+                                    
+
+                                </div>
+
+                            </div>
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Summary -->
+            <div class="col-lg-4">
+
+                <div class="card border-0 shadow-sm">
+
+                    <div class="card-body p-4">
+
+                        <h4 class="fw-bold mb-4">
+                            Order Summary
+                        </h4>
+
+                        <div class="d-flex justify-content-between mb-3">
+
+                            <span class="text-muted">
+                                Items
+                            </span>
+
+                            <span>
+                                @Model.CartItems.Sum(c => c.Quantity)
+                            </span>
+
+                        </div>
+
+                        <hr />
+
+                        <div class="d-flex justify-content-between mb-4">
+
+                            <span class="fw-bold">
+                                Total
+                            </span>
+
+                            <span class="fw-bold text-primary fs-5">
+                                $@Model.Total.ToString("N2")
+                            </span>
+
+                        </div>
+
+                        <a asp-area="Customer"
+                           asp-controller="Cart"
+                           asp-action="Checkout"
+                           class="btn btn-primary w-100">
+                            Proceed to Checkout
+                        </a>
+
+                        <a asp-area="Customer"
+                           asp-controller="Product"
+                           asp-action="Index"
+                           class="btn btn-light w-100 mt-2">
+                            Continue Shopping
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    }
+
+</div>

@@ -1,0 +1,376 @@
+﻿@model ECommerce.Models.ViewModels.AdminDashboardVM
+
+<div class="container-fluid py-4">
+
+    <!-- Header -->
+    <div class="admin-page-header mb-4">
+        <div>
+            <span class="admin-badge">ADMIN PANEL</span>
+
+            <h1>Dashboard</h1>
+
+            <p>
+                Overview of your store performance and activity.
+            </p>
+        </div>
+    </div>
+
+
+    <!-- Statistics -->
+    <div class="row g-4 mb-5">
+
+        <!-- Revenue -->
+        <div class="col-12 col-md-6 col-xl-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+                            <small class="text-muted">
+                                TOTAL REVENUE
+                            </small>
+
+                            <h3 class="fw-bold mt-2 mb-0 text-primary">
+                                $@Model.TotalRevenue.ToString("N2")
+                            </h3>
+                        </div>
+
+                        <div class="admin-icon">
+                            <i class="bi bi-currency-dollar"></i>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Orders -->
+        <div class="col-12 col-md-6 col-xl-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+                            <small class="text-muted">
+                                TOTAL ORDERS
+                            </small>
+
+                            <h3 class="fw-bold mt-2 mb-0">
+                                @Model.TotalOrders
+                            </h3>
+                        </div>
+
+                        <div class="admin-icon">
+                            <i class="bi bi-receipt"></i>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Customers -->
+        <div class="col-12 col-md-6 col-xl-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+                            <small class="text-muted">
+                                CUSTOMERS
+                            </small>
+
+                            <h3 class="fw-bold mt-2 mb-0">
+                                @Model.TotalCustomers
+                            </h3>
+                        </div>
+
+                        <div class="admin-icon">
+                            <i class="bi bi-people"></i>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Products -->
+        <div class="col-12 col-md-6 col-xl-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+                            <small class="text-muted">
+                                PRODUCTS
+                            </small>
+
+                            <h3 class="fw-bold mt-2 mb-0">
+                                @Model.TotalProducts
+                            </h3>
+                        </div>
+
+                        <div class="admin-icon">
+                            <i class="bi bi-box-seam"></i>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Orders + Stock -->
+    <div class="row g-4 mb-5">
+
+        <!-- Pending Orders -->
+        <div class="col-md-6">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+
+                        <h4 class="fw-bold mb-0">
+                            Pending Orders
+                        </h4>
+
+                        <span class="badge bg-warning text-dark">
+                            @Model.PendingOrders
+                        </span>
+
+                    </div>
+
+                    <p class="text-muted mb-0">
+                        Orders that still require processing.
+                    </p>
+
+                    <div class="mt-4">
+                        <a asp-area="Admin"
+                           asp-controller="Order"
+                           asp-action="Index"
+                           class="btn btn-primary">
+                            Manage Orders
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Out of Stock -->
+        <div class="col-md-6">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+
+                        <h4 class="fw-bold mb-0">
+                            Out of Stock
+                        </h4>
+
+                        <span class="badge bg-danger">
+                            @Model.OutOfStockProducts
+                        </span>
+
+                    </div>
+
+                    <p class="text-muted mb-0">
+                        Products that are currently unavailable.
+                    </p>
+
+                    <div class="mt-4">
+                        <a asp-area="Admin"
+                           asp-controller="Product"
+                           asp-action="Index"
+                           class="btn btn-primary">
+                            Manage Products
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Best Selling + Low Stock -->
+    <div class="row g-4">
+
+        <!-- Best Selling Products -->
+        <div class="col-lg-7">
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+
+                        <div>
+                            <h4 class="fw-bold mb-1">
+                                Best Selling Products
+                            </h4>
+
+                            <small class="text-muted">
+                                Top 10 products by quantity sold
+                            </small>
+                        </div>
+
+                        <i class="bi bi-trophy fs-3 text-primary"></i>
+
+                    </div>
+
+
+                    @if (Model.BestSellingProducts.Any())
+                    {
+                        <div class="table-responsive">
+
+                            <table class="table align-middle mb-0">
+
+                                <thead>
+                                    <tr>
+                                        <th>PRODUCT</th>
+                                        <th>QUANTITY SOLD</th>
+                                        <th>REVENUE</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    @foreach (var product in Model.BestSellingProducts)
+                                    {
+                                        <tr>
+
+                                            <td>
+                                                <strong>
+                                                    @product.ProductName
+                                                </strong>
+                                            </td>
+
+                                            <td>
+                                                @product.QuantitySold
+                                            </td>
+
+                                            <td>
+                                                <strong class="text-primary">
+                                                    $@product.Revenue.ToString("N2")
+                                                </strong>
+                                            </td>
+
+                                        </tr>
+                                    }
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted mb-0">
+                            No completed orders yet.
+                        </p>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Low Stock -->
+        <div class="col-lg-5">
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+
+                        <div>
+                            <h4 class="fw-bold mb-1">
+                                Low Stock
+                            </h4>
+
+                            <small class="text-muted">
+                                Products with 5 or fewer items
+                            </small>
+                        </div>
+
+                        <i class="bi bi-exclamation-triangle fs-3 text-warning"></i>
+
+                    </div>
+
+
+                    @if (Model.LowStockProducts.Any())
+                    {
+                        <div>
+
+                            @foreach (var product in Model.LowStockProducts)
+                            {
+                                <div class="d-flex justify-content-between align-items-center py-3 border-bottom">
+
+                                    <div>
+                                        <strong>
+                                            @product.ProductName
+                                        </strong>
+                                    </div>
+
+                                    @if (product.StockQuantity <= 0)
+                                    {
+                                        <span class="badge bg-danger">
+                                            Out of stock
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-warning text-dark">
+                                            @product.StockQuantity left
+                                        </span>
+                                    }
+
+                                </div>
+                            }
+
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted mb-0">
+                            No low-stock products.
+                        </p>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

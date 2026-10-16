@@ -1,0 +1,195 @@
+﻿@model ProductVM
+
+<div class="container py-5">
+
+    <div class="crud-page-header">
+        <span class="page-badge">PRODUCT MANAGEMENT</span>
+
+        <h1>Create Product</h1>
+
+        <p>Add a new product to your store.</p>
+    </div>
+
+    <div class="crud-card">
+
+        <form asp-action="Create"
+              method="post"
+              enctype="multipart/form-data">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="alert alert-danger">
+            </div>
+
+            <div class="form-section">
+
+                <div class="form-section-title">
+                    <i class="bi bi-box-seam"></i>
+                    Product Information
+                </div>
+
+
+                <!-- Product Name -->
+                <div class="mb-4">
+
+                    <label asp-for="Product.Name"
+                           class="form-label">
+                        Product Name
+                    </label>
+
+                    <input asp-for="Product.Name"
+                           class="form-control form-control-modern"
+                           placeholder="Enter product name" />
+
+                    <span asp-validation-for="Product.Name"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+
+                <!-- Description -->
+                <div class="mb-4">
+
+                    <label asp-for="Product.Description"
+                           class="form-label">
+                        Description
+                    </label>
+
+                    <textarea asp-for="Product.Description"
+                              class="form-control form-control-modern"
+                              rows="4"
+                              placeholder="Enter product description">
+                    </textarea>
+
+                    <span asp-validation-for="Product.Description"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+
+                <!-- Price -->
+                <div class="mb-4">
+
+                    <label asp-for="Product.Price"
+                           class="form-label">
+                        Price
+                    </label>
+
+                    <div class="price-input">
+
+                        <span>$</span>
+
+                        <input asp-for="Product.Price"
+                               class="form-control form-control-modern"
+                               placeholder="0.00" />
+
+                    </div>
+
+                    <span asp-validation-for="Product.Price"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+
+                <!-- Category -->
+                <div class="mb-4">
+
+                    <label asp-for="Product.CategoryId"
+                           class="form-label">
+                        Category
+                    </label>
+
+                    <select asp-for="Product.CategoryId"
+                            asp-items="Model.Categories"
+                            class="form-select form-control-modern">
+
+                        <option value="">
+                            Select Category
+                        </option>
+
+                    </select>
+
+                    <span asp-validation-for="Product.CategoryId"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+                <!-- Product Quantity -->
+                <div class="mb-4">
+
+                    <label asp-for="Product.StockQuantity"
+                           class="form-label">
+                        Product Stock Quantity
+                    </label>
+
+                    <input asp-for="Product.StockQuantity"
+                           class="form-control form-control-modern"
+                           placeholder="Enter product quantity" />
+
+                    <span asp-validation-for="Product.StockQuantity"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+
+                <!-- Product Image -->
+                <div class="mb-4">
+
+                    <label asp-for="Image"
+                           class="form-label">
+                        Product Image
+                    </label>
+
+                    <input asp-for="Image"
+                           type="file"
+                           accept="image/*"
+                           class="form-control form-control-modern" />
+
+                    <span asp-validation-for="Image"
+                          class="text-danger">
+                    </span>
+
+                    <small class="text-muted">
+                        Select an image for this product.
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- Actions -->
+            <div class="crud-actions">
+
+                <button type="submit"
+                        class="btn btn-primary">
+
+                    <i class="bi bi-check-lg"></i>
+                    Create Product
+
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-light">
+
+                    Cancel
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}
